@@ -21,9 +21,11 @@ Gem::Specification.new do |s|
   s.executables          << "nvim-control"
   s.homepage              = "https://github.com/majjoha/nvim-control"
   s.license               = "ISC"
-  s.required_ruby_version = ">= 3.4.0"
+  s.required_ruby_version = ">= 4.0.0"
 
   s.add_dependency "neovim", "~> 0.10.0"
+  # Extracted from Ruby's default gems in 4.0; required transitively by neovim.
+  s.add_dependency "logger", "~> 1.7"
 
   s.metadata["rubygems_mfa_required"] = "true"
   s.metadata["source_code_uri"] = "https://github.com/majjoha/nvim-control"
