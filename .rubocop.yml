@@ -38,3 +38,14 @@ Layout/ArrayAlignment:
 Layout/LineLength:
   Enabled: true
   Max: 80
+# These specs stub RPC methods provided dynamically via method_missing (e.g.
+# Neovim::Buffer#get_lines), which verifying doubles cannot check.
+RSpec/VerifiedDoubles:
+  Exclude:
+    - spec/lib/nvim_control/data_extractor_spec.rb
+    - spec/lib/nvim_control/controller_spec.rb
+# Response fixtures are held in `let` blocks; the JSON literals are too large to
+# inline without breaking RSpec/ExampleLength, so the group exceeds five.
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - spec/lib/nvim_control/controller_spec.rb
