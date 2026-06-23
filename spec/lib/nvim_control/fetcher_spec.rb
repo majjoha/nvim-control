@@ -20,23 +20,19 @@ RSpec.describe NvimControl::Fetcher do
       allow(NvimControl::Connector).to receive(:new)
         .and_return(connector)
       allow(connector).to receive(:connect).and_yield(client)
-      allow(NvimControl::DataExtractor).to receive_messages(
-        cursor: { line: 1, col: 0 },
-        file: "/path/to/file.rb",
-        visual_selection: nil,
-        diagnostics: []
-      )
+      allow(NvimControl::DataExtractor).to receive(:context)
+        .with(client: client)
+        .and_return(context)
     end
 
     it "returns the context as JSON" do
       expect(described_class.fetch).to eq(JSON.generate(context))
-      expect(NvimControl::DataExtractor).to have_received(:cursor)
-        .with(client: client)
-      expect(NvimControl::DataExtractor).to have_received(:file)
-        .with(client: client)
-      expect(NvimControl::DataExtractor).to have_received(:visual_selection)
-        .with(client: client)
-      expect(NvimControl::DataExtractor).to have_received(:diagnostics)
+    end
+
+    it "delegates to the data extractor" do
+      described_class.fetch
+
+      expect(NvimControl::DataExtractor).to have_received(:context)
         .with(client: client)
     end
 
@@ -56,7 +52,7 @@ RSpec.describe NvimControl::Fetcher do
 
     context "when context extraction fails" do
       before do
-        allow(NvimControl::DataExtractor).to receive(:cursor).and_raise(
+        allow(NvimControl::DataExtractor).to receive(:context).and_raise(
           NvimControl::OperationError.new("Build error")
         )
       end

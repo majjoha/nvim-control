@@ -19,14 +19,7 @@ module NvimControl
       private
 
       def build_context
-        Connector.new.connect do |client|
-          {
-            cursor: DataExtractor.cursor(client: client),
-            file: DataExtractor.file(client: client),
-            selection: DataExtractor.visual_selection(client: client),
-            diagnostics: DataExtractor.diagnostics(client: client)
-          }
-        end
+        Connector.new.connect { |client| DataExtractor.context(client: client) }
       end
 
       def format_error(error, details)

@@ -2,6 +2,15 @@
 
 module NvimControl
   class DataExtractor
+    def self.context(client:)
+      {
+        cursor: cursor(client: client),
+        file: file(client: client),
+        selection: visual_selection(client: client),
+        diagnostics: diagnostics(client: client)
+      }
+    end
+
     def self.cursor(client:)
       cursor = client.current.window.cursor
       { line: cursor[0], col: cursor[1] }
