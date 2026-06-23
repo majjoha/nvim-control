@@ -71,7 +71,7 @@ module NvimControl
       def selected_text(client, marks)
         start_line = marks[:start][1]
         end_line = marks[:end][1]
-        client.eval("getline(#{start_line}, #{end_line})")
+        client.current.buffer.get_lines(start_line - 1, end_line, true)
       end
 
       def build_selection_info(marks, text)
