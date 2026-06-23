@@ -2,10 +2,10 @@
 
 require "neovim"
 
-module NvimContext
+module NvimControl
   class Connector
     def initialize(client: nil)
-      @socket_path = ENV["NVIM_CONTEXT_SOCKET"] || DEFAULT_SOCKET_PATH
+      @socket_path = ENV["NVIM_CONTROL_SOCKET"] || DEFAULT_SOCKET_PATH
       @client = client || begin
         Neovim.attach_unix(socket_path)
       rescue StandardError => e
@@ -18,7 +18,7 @@ module NvimContext
     def connect
       yield client if block_given?
     rescue StandardError => e
-      raise ContextError,
+      raise OperationError,
             "Failed during Neovim operation: #{e.message}",
             e.backtrace
     end
@@ -27,7 +27,7 @@ module NvimContext
 
     attr_reader :client, :socket_path
 
-    DEFAULT_SOCKET_PATH = File.expand_path("nvim-context.sock")
+    DEFAULT_SOCKET_PATH = File.expand_path("nvim-control.sock")
     private_constant :DEFAULT_SOCKET_PATH
   end
 end

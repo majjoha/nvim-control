@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module NvimContext
+module NvimControl
   class DataExtractor
     def self.cursor(client:)
       cursor = client.current.window.cursor
       { line: cursor[0], col: cursor[1] }
     rescue StandardError => e
-      raise ContextError,
+      raise OperationError,
             "Failed to get cursor info: #{e.message}",
             e.backtrace
     end
@@ -14,7 +14,7 @@ module NvimContext
     def self.file(client:)
       client.current.buffer.name
     rescue StandardError => e
-      raise ContextError,
+      raise OperationError,
             "Failed to get file info: #{e.message}",
             e.backtrace
     end

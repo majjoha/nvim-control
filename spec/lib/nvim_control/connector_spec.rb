@@ -2,7 +2,7 @@
 
 require_relative "../../spec_helper"
 
-RSpec.describe NvimContext::Connector do
+RSpec.describe NvimControl::Connector do
   let(:client) { instance_double(Neovim::Client) }
 
   describe "#initialize" do
@@ -15,7 +15,7 @@ RSpec.describe NvimContext::Connector do
       it "raises a `ConnectionError` error" do
         expect do
           described_class.new
-        end.to raise_error(NvimContext::ConnectionError,
+        end.to raise_error(NvimControl::ConnectionError,
                            /Failed to connect to Neovim socket/)
       end
     end
@@ -40,10 +40,10 @@ RSpec.describe NvimContext::Connector do
           .and_raise(StandardError.new("Lua error"))
       end
 
-      it "raises a `ContextError` error with a message" do
+      it "raises an `OperationError` error with a message" do
         expect do
           connector.connect { client.eval("bad lua") }
-        end.to raise_error(NvimContext::ContextError,
+        end.to raise_error(NvimControl::OperationError,
                            /Failed during Neovim operation/)
         expect(client).to have_received(:eval).with("bad lua")
       end

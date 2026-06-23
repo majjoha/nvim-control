@@ -2,7 +2,7 @@
 
 require "json"
 
-module NvimContext
+module NvimControl
   class Fetcher
     class << self
       def fetch
@@ -10,7 +10,7 @@ module NvimContext
         JSON.generate(context)
       rescue ConnectionError => e
         format_error("Connection failed", e.message)
-      rescue ContextError => e
+      rescue OperationError => e
         format_error("Context extraction failed", e.message)
       rescue StandardError => e
         format_error("Unexpected error", e.message)

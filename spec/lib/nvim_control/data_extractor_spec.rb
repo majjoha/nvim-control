@@ -2,7 +2,7 @@
 
 require_relative "../../spec_helper"
 
-RSpec.describe NvimContext::DataExtractor do
+RSpec.describe NvimControl::DataExtractor do
   let(:client) { instance_double(Neovim::Client) }
 
   describe ".cursor" do

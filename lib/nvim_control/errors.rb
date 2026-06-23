@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module NvimContext
+module NvimControl
   class ConnectionError < StandardError; end
-  class ContextError < StandardError; end
+  class OperationError < StandardError; end
 end
