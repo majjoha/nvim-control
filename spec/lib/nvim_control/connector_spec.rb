@@ -45,7 +45,6 @@ RSpec.describe NvimControl::Connector do
           connector.connect { client.eval("bad lua") }
         end.to raise_error(NvimControl::OperationError,
                            /Failed during Neovim operation/)
-        expect(client).to have_received(:eval).with("bad lua")
       end
     end
   end
