@@ -11,6 +11,12 @@ description: >
 Provides explicit mutation and command execution for the user's running Neovim
 session.
 
+## Invocation
+`nvim-control` is an executable already on `PATH`, not a script bundled with
+this skill. Invoke it directly by its bare name, for example `nvim-control
+read`. Never prefix it with the skill directory or any other path; a path inside
+the skill directory does not exist and will fail.
+
 ## How it works
 1. Read context first with `nvim-control read` when the action depends on the
    current file, cursor, selection, or diagnostics.

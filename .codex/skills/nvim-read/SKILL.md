@@ -13,6 +13,12 @@ description: >
 Provides live context from the user's Neovim editor session to help answer
 context-aware questions about code.
 
+## Invocation
+`nvim-control` is an executable already on `PATH`, not a script bundled with
+this skill. Invoke it directly by its bare name, for example `nvim-control
+read`. Never prefix it with the skill directory or any other path; a path inside
+the skill directory does not exist and will fail.
+
 ## How it works
 1. Executes `nvim-control read` to get the current editor state.
 2. Returns JSON data including cursor position, open file, visual selection and
